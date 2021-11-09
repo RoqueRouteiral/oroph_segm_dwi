@@ -1,0 +1,66 @@
+
+exp_name: and_second_stage_all_lrok_fold_3
+dataset_path: F:/data_dwi_project/ # D:/project_2/data_dwi_project/ #dataset_path:   
+
+experiments: Experiments_dwi/
+model_name: ynet # options: unet3d, ynet, xnet, xlate, small, xnet_linear, ynet_mp, xnet_mp, xlate_mp, det_u
+
+weights_test_file: D:/project_2/scripts/p2_segmentation/Experiments_dwi/and_second_stage_no339_pc1/best_model.ckpt
+weights_test_file_multi: E:/p2_segmentation/Experiments/fading_20_1_5/snapshot_epoch{}.ckpt
+weights_test_finetune: E:/p2_segmentation/Experiments/from_60_to_80/trained_model.ckpt
+
+finetune: False
+
+train: True
+test: False
+predict: False
+thumbnail: True
+repeat_training_curve: False
+
+test_set: False
+val_set: True
+extra_val_set: False
+
+loss: 'dice_loss'
+
+second_stage: True
+
+box_prediction: False
+box_path: 'D:/project_2/data_dwi_project/boxes_first_stage/fold_4/all/' # 'F:/data_dwi_project/boxes_first_stage/fold_1/all/'
+
+t1gd: True
+t2w: True
+t1w: True
+dwi: True
+
+
+batch_size: 1
+epochs: 200
+optimizer: adam     
+learning_rate: 0.0001
+snapshots: 1         
+
+gpu: 1
+
+n_channels: 4
+
+da: False
+da_flip: True
+da_deform: True
+da_rot: 10
+
+lr_scheduler: False
+
+resize: True
+norm: True
+
+box: False
+
+sizeX: 112
+sizeY: 112
+sizeZ: 112
+
+normalize: True
+shuffle_data: False
+
+seed: 1924    
