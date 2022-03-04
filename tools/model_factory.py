@@ -24,6 +24,7 @@ from models.unet_det import Unet_det
 
 
 from tools.metrics import dice, DiceLoss
+from tools.focal_loss_functions import AsymmetricUnifiedFocalLoss
 from tools.metrics_dm import dice_dm, hd_dm, msd, compute_surface_distances_dm
 
 from tools.plots import plot_history, plot_history_offline
@@ -82,7 +83,8 @@ class Model():
         if self.cf['loss']=='dice_loss':
             self.criterion =DiceLoss()
             self.criterion2 = nn.MSELoss()
-
+        elif self.cf['loss']=='focal_loss':
+            self.criterion = AsymmetricUnifiedFocalLoss()
         self.optimizer = optim.Adam(self.model.parameters(), lr=self.cf['learning_rate'])
         best_id_epoch = 0
         if self.cf['lr_scheduler']:
