@@ -10,15 +10,6 @@ def _assert_no_grad(tensor):
         "nn criterions don't compute the gradient w.r.t. targets - please " \
         "mark these tensors as not requiring gradients"
         
-class _Loss(Module):
-    def __init__(self):
-        super(_Loss, self).__init__()
-
-
-class _WeightedLoss(_Loss):
-    def __init__(self, weight=None):
-        super(_WeightedLoss, self).__init__()
-        self.register_buffer('weight', weight)
         
 def dice(input, target, weight=None, smooth = 0.001):
     
@@ -31,7 +22,7 @@ def dice(input, target, weight=None, smooth = 0.001):
     loss = ((2. * intersection + smooth) / (iflat.sum() + tflat.sum() + smooth))
     return loss
               
-class DiceLoss(_WeightedLoss):
+class DiceLoss(Module):
     r"""Creates a criterion that measures the Dice Loss
     between the target and the output:
 
@@ -51,12 +42,12 @@ class DiceLoss(_WeightedLoss):
         >>> output = loss(m(input), target)
         >>> output.backward()
     """
-    def __init__(self, weight=None):
-        super(DiceLoss, self).__init__(weight)
+    def __init__(self):
+        super(DiceLoss, self).__init__()
 
     def forward(self, input, target):
         _assert_no_grad(target)
-        return 1-dice(input, target, weight=self.weight)
+        return 1-dice(input, target)
     
         
         
